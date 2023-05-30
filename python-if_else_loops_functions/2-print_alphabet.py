@@ -2,5 +2,6 @@
 num_ascii = 97
 
 while num_ascii < 123:
-    print(chr(num_ascii), end="")
+    letra = chr(num_ascii)
+    print(f"{letra}", end = "")
     num_ascii += 1
