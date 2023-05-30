@@ -5,7 +5,7 @@ re = abs(number) % 10
 re *= -1 if number < 0 else 1
 
 if re > 5:
-    print(f"The string Last digit of {number} is {re} and is greater than 5")
+    print(f"Last digit of {number} is {re} and is greater than 5")
 elif re == 0:
     print(f"Last digit of {number} is {re} and is 0")
 else:
