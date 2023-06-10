@@ -3,11 +3,9 @@ def safe_print_integer(value):
     """
     función que imprime un entero
     """
-    entero = 0
     try:
-        entero = int(value)
+        print("{:d}".format(value))
     except ValueError:
         return False
 
-    print("{:d}".format(entero))
     return True
