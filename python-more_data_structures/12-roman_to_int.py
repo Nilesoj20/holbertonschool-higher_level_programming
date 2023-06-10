@@ -18,6 +18,9 @@ def roman_to_int(roman_string):
     lista = []
     if not roman_string:
         return 0
+    if not isinstance(roman_string, str):
+        return 0
+
     romano = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     for i in range(0, len(roman_string)):
         if roman_string[i] in romano:
