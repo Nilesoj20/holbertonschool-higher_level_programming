@@ -1,16 +1,13 @@
 #!/usr/bin/python3
 def reglas(lista):
+    valor = 0
     if len(lista) == 1:
         return lista.pop()
-
-    if lista[0] < lista[1]:
-        valor = lista[0] - lista[1]
-        for i in range(2, len(lista)):
-            valor = valor + lista[i]
-    else:
-        valor = sum(lista)
-    if valor < 0:
-        valor *= -1
+    for i in range(len(lista)):
+        if i != len(lista) - 1 and lista[i] < lista[i+1]:
+            valor += lista[i] * -1
+        else:
+            valor += lista[i]
     return valor
 
 
