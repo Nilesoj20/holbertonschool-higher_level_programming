@@ -9,5 +9,5 @@ def safe_print_integer(value):
     except ValueError:
         return False
 
-    print("{}".format(entero))
+    print("{:d}".format(entero))
     return True
