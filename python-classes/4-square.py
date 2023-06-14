@@ -18,21 +18,19 @@ class Square:
         return self.__size * self.__size
 
     @property
-    """ int: private size
-
-    Returns: size
-    """
     def size(self):
+        """ int: private size
+        Returns: size
+        """
         return self.__size
 
     @size.setter
-    """
-    Sets value into size, must be int
-
-    Args: 
-        value (int): size
-    """
     def size(self, value):
+        """ Sets value into size, must be int
+
+        Args:
+            value (int): size
+        """
         if not isinstance(value, int):
             raise TypeError("size must be an integer")
         elif value < 0:
