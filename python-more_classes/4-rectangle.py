@@ -72,12 +72,4 @@ class Rectangle:
 
     def __repr__(self):
         """  returns rectangle with the character # """
-        if self.__width == 0 or self.__height == 0:
-            return ""
-        res = []
-        for i in range(self.__height):
-            for x in range(self.__width):
-                res.append("#")
-            if i != self.__height - 1:
-                res.append("\n")
         return (f"Rectangle({self.__width},{self.__height})")
