@@ -47,9 +47,9 @@ class Rectangle:
         Args:
             value (int): height
         """
-        if not isinstance(value, int):
+        if type(value) is not int:
             raise TypeError("height must be an integer")
-        elif value < 0:
+        if value < 0:
             raise ValueError("height must be >= 0")
         self.__height = value
 
@@ -88,6 +88,12 @@ class Rectangle:
 
     @staticmethod
     def bigger_or_equal(rect_1, rect_2):
+        """ Compare rectangles
+        Args:
+            rect_1 (int): rectangle 1
+            rect_2 (int): rectangle 2
+        Returns: larger rectangle
+        """
         if not isinstance(rect_1, Rectangle):
             raise TypeError("rect_1 must be an instance of Rectangle")
         if not isinstance(rect_2, Rectangle):
@@ -101,5 +107,9 @@ class Rectangle:
 
     @classmethod
     def square(cls, size=0):
-        square = cls(size, size)
-        return square
+        """ Class method
+        Args:
+            size (int): size
+        Returns: returns a new Rectangle instance
+        """
+        return Rectangle(size, size)
