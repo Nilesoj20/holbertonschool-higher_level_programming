@@ -53,6 +53,15 @@ class Rectangle:
             raise ValueError("height must be >= 0")
         self.__height = value
 
+    @classmethod
+    def square(cls, size=0):
+        """ Class method
+        Args:
+            size (int): size
+        Returns: returns a new Rectangle instance
+        """
+        return Rectangle(size, size)
+
     def area(self):
         """ returns the rectangle area """
         return (self.__width * self.__height)
@@ -104,12 +113,3 @@ class Rectangle:
             return rect_1
         else:
             return rect_2
-
-    @classmethod
-    def square(cls, size=0):
-        """ Class method
-        Args:
-            size (int): size
-        Returns: returns a new Rectangle instance
-        """
-        return Rectangle(size, size)
