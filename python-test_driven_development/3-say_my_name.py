@@ -1,30 +1,31 @@
 #!/usr/bin/python3
 """
 
-This module is composed by a function that prints a square with the character #
+This module is composed by a function prints a message
 
 """
 
 
-def print_square(size):
-    """ Function that prints a square with the character #
+def say_my_name(first_name, last_name=""):
+    """ Function that prints "My name is <first name> <last name>"
 
     Args:
-        size: size of the square printed
+        first_name: first name
+        last_name: last name
 
     Returns:
         No return
 
     Raises:
-        TypeError: If size is not an integer number
+        TypeError: If first_name or last_name is not a string
 
 
     """
 
-    if not isinstance(size, int):
-        raise TypeError("size must be an integer")
-    if size < 0:
-        raise ValueError("size must be >= 0")
+    if type(first_name) is not str:
+        raise TypeError("first_name must be a string")
 
-    for i in range(size):
-        print("#" * size)
+    if type(last_name) is not str:
+        raise TypeError("last_name must be a string")
+
+    print("My name is {} {}".format(first_name, last_name))
