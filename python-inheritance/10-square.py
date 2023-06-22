@@ -16,4 +16,5 @@ class Square(Rectangle):
             the area and the message
         """
         super().__init__(size, size)
+        self.integer_validator("size", size)
         self.__size = size
