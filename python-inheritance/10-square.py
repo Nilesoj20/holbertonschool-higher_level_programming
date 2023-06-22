@@ -7,16 +7,13 @@ class Square(Rectangle):
     """Creates a Square class receiving size """
 
     def __init__(self, size):
-        """ Init constructor method """
+        """ Init constructor method
 
+        Args:
+            size (int): attribute that receives the method
+
+        Return:
+            the area and the message
+        """
+        super().__init__(size, size)
         self.__size = size
-
-    def area(self):
-        """ Change to the area method to return area"""
-
-        return self.__size * self.__size
-
-    def __str__(self):
-        """ method for printing description """
-
-        return "[Rectangle] {}/{}".format(self.__size, self.__size)
