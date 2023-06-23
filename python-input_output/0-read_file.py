@@ -10,4 +10,4 @@ def read_file(filename=""):
     Return:
         prints it to stdout"""
     with open('my_file_0.txt', 'r') as file:
-        print(file.read())
+        print(file.read(), end="")
