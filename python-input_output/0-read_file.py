@@ -9,5 +9,5 @@ def read_file(filename=""):
 
     Return:
         prints it to stdout"""
-    with open('my_file_0.txt', 'r') as file:
+    with open(filename, 'r') as file:
         print(file.read(), end="")
