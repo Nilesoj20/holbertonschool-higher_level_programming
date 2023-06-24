@@ -25,11 +25,7 @@ class Student:
         Returns:
             dictionary with values of the requested facility
         """
-        if type(attrs) is list:
-            for i in attrs:
-                if type(i) != str:
-                    return self.__dict__
-            for x in attrs:
-                if hasattr(self, x):
-                    return {x: self.__dict__.get(x)}
+        if (type(attrs) == list and
+                all(type(ele) == str for ele in attrs)):
+            return {k: getattr(self, k) for k in attrs if hasattr(self, k)}
         return self.__dict__
