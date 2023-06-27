@@ -15,11 +15,11 @@ class Rectangle(Base):
             y (int): coordinates of the rectangle
             id (int): rectangle id
         """
+        super().__init__(id)
         self.width = width
         self.height = height
         self.x = x
         self.y = y
-        super().__init__(id)
 
     @property
     def width(self):
@@ -77,7 +77,7 @@ class Rectangle(Base):
         """
         if type(value) != int:
             raise TypeError("x must be an integer")
-        if value <= 0:
+        if value < 0:
             raise ValueError("x must be >= 0")
         self.__x = value
 
@@ -87,7 +87,6 @@ class Rectangle(Base):
         Returns: y
         """
         return self.__y
-        self.__width = value
 
     @y.setter
     def y(self, value):
@@ -96,8 +95,8 @@ class Rectangle(Base):
         Args:
             value (int): coordinates of the rectangle y
         """
-        if type(value) is not int:
+        if type(value) != int:
             raise TypeError("y must be an integer")
-        if value <= 0:
+        if value < 0:
             raise ValueError("y must be >= 0")
         self.__y = value
