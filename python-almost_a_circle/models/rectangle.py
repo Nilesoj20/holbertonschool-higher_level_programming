@@ -114,5 +114,6 @@ class Rectangle(Base):
 
     def __str__(self):
         """ method __str__ that returns a message"""
-        return f"[Rectangle] ({self.id}) {self.__x,}/{self.__y,} -"
-        f"{self.__width}/{sel.__height}"
+        return "[Rectangle] ({}) {}/{} - {}/{}".format(self.id,
+                                                       self.x, self.y,
+                                                       self.width, self.height)
