@@ -44,10 +44,11 @@ class Base:
         """
         nombre = cls.__name__
         nombre_archivo = f"{nombre}.json"
-        with open(nombre_archivo, 'w', encoding="utf-8") as file:
-            if list_objs is None:
+        if list_objs is None:
+            with open(nombre_archivo, 'w', encoding="utf-8") as file:
                 file.write(cls.to_json_string([]))
-            else:
+        else:
+            with open(nombre_archivo, 'w', encoding="utf-8") as file:
                 lista = [r.to_dictionary() for r in list_objs]
                 json_dic = cls.to_json_string(lista)
                 file.write(json_dic)
