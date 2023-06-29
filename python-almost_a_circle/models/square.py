@@ -85,3 +85,8 @@ class Square(Rectangle):
                 if clave == "y":
                     self.y = valor
                     continue
+
+    def to_dictionary(self):
+        """method the dictionary representation of a square"""
+        return {'id': self.id, 'x': self.x,
+                'size': self.size, 'y': self.y}
