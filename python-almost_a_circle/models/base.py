@@ -30,7 +30,7 @@ class Base:
         the JSON string representation
         """
         if list_dictionaries is None or list_dictionaries == []:
-            return []
+            return "[]"
         else:
             return json.dumps(list_dictionaries)
 
@@ -42,13 +42,11 @@ class Base:
         Returns:
             string representation of list_objs to a file
         """
-        nombre = cls.__name__
-        nombre_archivo = f"{nombre}.json"
         if list_objs is None:
-            with open(nombre_archivo, 'w', encoding="utf-8") as file:
+            with open(f"{cls.__name__}.json", 'w', encoding="utf-8") as file:
                 file.write(cls.to_json_string([]))
         else:
-            with open(nombre_archivo, 'w', encoding="utf-8") as file:
+            with open(f"{cls.__name__}.json", 'w', encoding="utf-8") as file:
                 lista = [r.to_dictionary() for r in list_objs]
                 json_dic = cls.to_json_string(lista)
                 file.write(json_dic)
