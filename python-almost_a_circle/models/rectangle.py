@@ -119,7 +119,7 @@ class Rectangle(Base):
                                                        self.x, self.y,
                                                        self.width, self.height)
 
-    def update(self, *args):
+    def update(self, *args, **kwargs):
         """ Method assigns an argument to each attribute
 
         Args:
@@ -130,7 +130,7 @@ class Rectangle(Base):
                 4th argument should be the x attribute
                 5th argument should be the y attribute
         """
-        if len(args) != 0:
+        if args and len(args) != 0:
             flag = 1
             for arg in args:
                 if flag == 1:
@@ -152,4 +152,22 @@ class Rectangle(Base):
                 if flag == 5:
                     self.y = arg
                     flag += 1
+                    continue
+
+        if kwargs and len(kwargs) != 0:
+            for clave, valor in kwargs.items():
+                if clave == "id":
+                    self.id = valor
+                    continue
+                if clave == "width":
+                    self.width = valor
+                    continue
+                if clave == "height":
+                    self.height = valor
+                    continue
+                if clave == "x":
+                    self.x = valor
+                    continue
+                if clave == "y":
+                    self.y = valor
                     continue
