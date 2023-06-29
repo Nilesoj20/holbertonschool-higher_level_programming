@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Project base class """
+import json
 
 
 class Base:
@@ -17,3 +18,14 @@ class Base:
         else:
             Base.__nb_objects += 1
             self.id = self.__nb_objects
+
+    def to_json_string(list_dictionaries):
+        """ method Serialization
+
+        Args:
+            list_dictionaries (dict):  is a list of dictionaries
+
+        Returns:
+        the JSON string representation
+        """
+        return json.dumps(list_dictionaries)
