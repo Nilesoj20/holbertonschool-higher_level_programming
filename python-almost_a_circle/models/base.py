@@ -42,11 +42,12 @@ class Base:
         Returns:
             string representation of list_objs to a file
         """
-        if list_objs is None:
-            return []
         nombre = cls.__name__
         nombre_archivo = f"{nombre}.json"
         with open(nombre_archivo, 'w') as file:
-            lista = [r.to_dictionary() for r in list_objs]
-            json_dic = cls.to_json_string(lista)
-            file.write(json_dic)
+            if list_objs is None:
+                file.write("[]")
+            else:
+                lista = [r.to_dictionary() for r in list_objs]
+                json_dic = cls.to_json_string(lista)
+                file.write(json_dic)
