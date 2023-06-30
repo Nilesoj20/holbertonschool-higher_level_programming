@@ -43,10 +43,25 @@ class Base:
             string representation of list_objs to a file
         """
         if list_objs is None:
-            with open(f"{cls.__name__}.json", 'w', encoding="utf-8") as file:
+            with open(f"{cls.__name__}.json", 'w') as file:
                 file.write(cls.to_json_string([]))
         else:
-            with open(f"{cls.__name__}.json", 'w', encoding="utf-8") as file:
+            with open(f"{cls.__name__}.json", 'w') as file:
                 lista = [r.to_dictionary() for r in list_objs]
                 json_dic = cls.to_json_string(lista)
                 file.write(json_dic)
+
+    @staticmethod
+    def from_json_string(json_string):
+        """  the static method deserialization
+
+        Args:
+            json_string (): a list of dictionaries
+
+        Returns:
+            the list of the JSON string
+        """
+        if json_string is None or json_string == "":
+            return []
+        else:
+            return json.loads(json_string)
