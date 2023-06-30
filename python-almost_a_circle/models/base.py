@@ -82,3 +82,19 @@ class Base:
                 dummy = cls(1)
             dummy.update(**dictionary)
             return dummy
+
+    @classmethod
+    def load_from_file(cls):
+        """classes instantiated from a file of JSON strings.
+
+        Returns:
+            If the file does not exist - an empty list.
+            Otherwise - a list of instantiated classes.
+        """
+        filename = str(cls.__name__) + ".json"
+        try:
+            with open(filename, "r") as file:
+                lista = cls.from_json_string(file.read())
+                return [cls.create(**d) for d in lista]
+        except IOError:
+            return []
