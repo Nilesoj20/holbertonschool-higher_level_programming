@@ -177,7 +177,7 @@ class TestBase(unittest.TestCase):
         style = pycodestyle.StyleGuide(quiet=True)
         result = style.check_files(['models/base.py',
                                     'tests/test_models/test_base.py'])
-        self.assertEqual(result.total_errors, 2, "Found errors")
+        self.assertEqual(result.total_errors, 0, "Found errors")
 
 
 if __name__ == '__main__':
