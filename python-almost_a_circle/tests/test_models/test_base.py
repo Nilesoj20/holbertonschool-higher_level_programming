@@ -15,7 +15,7 @@ class TestBase(unittest.TestCase):
         """Method inicial """
         b1 = Base()
         b2 = Base(20)
-        self.assertEqual(13, b1.id)
+        self.assertEqual(21, b1.id)
         self.assertEqual(20, b2.id)
         b1 = Base()
         b2 = Base()
@@ -84,6 +84,36 @@ class TestBase(unittest.TestCase):
         lis = Base.from_json_string('[{"width": 5, "height": 8}]')
         self.assertEqual(js, lis)
         self.assertEqual(list, type(js))
+        list_input = [{"id": 89, "width": 10, "height": 4}]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertEqual(list, type(list_output))
+        list_input = [{"id": 89, "width": 10, "height": 4, "x": 7}]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertEqual(list_input, list_output)
+        list_input = [
+            {"id": 89, "width": 10, "height": 4, "x": 7, "y": 8},
+            {"id": 98, "width": 5, "height": 2, "x": 1, "y": 3},
+        ]
+        json_list_input = Rectangle.to_json_string(list_input)
+        list_output = Rectangle.from_json_string(json_list_input)
+        self.assertEqual(list_input, list_output)
+        list_input = [{"id": 89, "size": 10, "height": 4}]
+        json_list_input = Square.to_json_string(list_input)
+        list_output = Square.from_json_string(json_list_input)
+        self.assertEqual(list_input, list_output)
+        list_input = [
+            {"id": 89, "size": 10, "height": 4},
+            {"id": 7, "size": 1, "height": 7}
+        ]
+        json_list_input = Square.to_json_string(list_input)
+        list_output = Square.from_json_string(json_list_input)
+        self.assertEqual(list_input, list_output)
+        with self.assertRaises(TypeError):
+            Base.from_json_string()
+        with self.assertRaises(TypeError):
+            Base.from_json_string([], 1)
 
     def test_save_to_file(self):
         """Method to save_to_file"""
@@ -102,6 +132,16 @@ class TestBase(unittest.TestCase):
         with open("Rectangle.json", "r") as file:
             self.assertTrue(len(file.read()) == 105)
 
+        r = Rectangle(10, 7, 2, 8, 5)
+        Rectangle.save_to_file([r])
+        with open("Rectangle.json", "r") as f:
+            self.assertTrue(len(f.read()) == 53, "Error")
+        r1 = Rectangle(10, 7, 2, 8, 5)
+        r2 = Rectangle(2, 4, 1, 2, 3)
+        Rectangle.save_to_file([r1, r2])
+        with open("Rectangle.json", "r") as f:
+            self.assertTrue(len(f.read()) == 105, "Error")
+
     @classmethod
     def tearDown(self):
         """Delete any created files."""
@@ -118,16 +158,6 @@ class TestBase(unittest.TestCase):
         except IOError:
             pass
 
-        r = Rectangle(10, 7, 2, 8, 5)
-        Rectangle.save_to_file([r])
-        with open("Rectangle.json", "r") as f:
-            self.assertTrue(len(f.read()) == 53, "Error")
-        r1 = Rectangle(10, 7, 2, 8, 5)
-        r2 = Rectangle(2, 4, 1, 2, 3)
-        Rectangle.save_to_file([r1, r2])
-        with open("Rectangle.json", "r") as f:
-            self.assertTrue(len(f.read()) == 105, "Error")
-
     def test_create(self):
         """Method to create"""
         r1 = Rectangle(3, 5, 1)
@@ -138,6 +168,26 @@ class TestBase(unittest.TestCase):
         self.assertAlmostEqual(r2, r2)
         self.assertFalse(r1 == r2)
         self.assertFalse(r1 is r2)
+        r1 = Rectangle(3, 5, 1, 2, 7)
+        r1_dictionary = r1.to_dictionary()
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertEqual("[Rectangle] (7) 1/2 - 3/5", str(r1))
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertEqual("[Rectangle] (7) 1/2 - 3/5", str(r2))
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertIsNot(r1, r2)
+        r2 = Rectangle.create(**r1_dictionary)
+        self.assertNotEqual(r1, r2)
+        s1 = Square(3, 5, 1, 7)
+        s1_dictionary = s1.to_dictionary()
+        s2 = Square.create(**s1_dictionary)
+        self.assertEqual("[Square] (7) 5/1 - 3", str(s1))
+        s2 = Square.create(**s1_dictionary)
+        self.assertEqual("[Square] (7) 5/1 - 3", str(s2))
+        s2 = Square.create(**s1_dictionary)
+        self.assertIsNot(s1, s2)
+        s2 = Square.create(**s1_dictionary)
+        self.assertNotEqual(s1, s2)
 
     def test_load_from_file(self):
         """Method load_from_file """
@@ -146,12 +196,12 @@ class TestBase(unittest.TestCase):
         list_input = [r1, r2]
         Rectangle.save_to_file(list_input)
         list_output = Rectangle.load_from_file()
-        self.assertAlmostEqual(list_output[0].id, 3)
+        self.assertAlmostEqual(list_output[0].id, 11)
         self.assertAlmostEqual(list_output[0].x, 2)
         self.assertAlmostEqual(list_output[0].width, 10)
         self.assertAlmostEqual(list_output[0].height, 7)
         self.assertAlmostEqual(list_output[0].y, 8)
-        self.assertAlmostEqual(list_output[1].id, 4)
+        self.assertAlmostEqual(list_output[1].id, 12)
         self.assertAlmostEqual(list_output[1].x, 0)
         self.assertAlmostEqual(list_output[1].width, 2)
         self.assertAlmostEqual(list_output[1].height, 4)
@@ -161,16 +211,28 @@ class TestBase(unittest.TestCase):
         sinput = [s1, s2]
         Square.save_to_file(sinput)
         soutput = Square.load_from_file()
-        self.assertAlmostEqual(soutput[0].id, 7)
+        self.assertAlmostEqual(soutput[0].id, 15)
         self.assertAlmostEqual(soutput[0].width, 5)
         self.assertAlmostEqual(soutput[0].height, 5)
         self.assertAlmostEqual(soutput[0].x, 0)
         self.assertAlmostEqual(soutput[0].y, 0)
-        self.assertAlmostEqual(soutput[1].id, 8)
+        self.assertAlmostEqual(soutput[1].id, 16)
         self.assertAlmostEqual(soutput[1].width, 7)
         self.assertAlmostEqual(soutput[1].height, 7)
         self.assertAlmostEqual(soutput[1].x, 9)
         self.assertAlmostEqual(soutput[1].y, 1)
+
+    @classmethod
+    def tearDown(self):
+        """Delete any created files."""
+        try:
+            os.remove("Rectangle.json")
+        except IOError:
+            pass
+        try:
+            os.remove("Square.json")
+        except IOError:
+            pass
 
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
