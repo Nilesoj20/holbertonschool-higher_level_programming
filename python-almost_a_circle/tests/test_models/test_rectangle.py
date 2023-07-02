@@ -140,6 +140,19 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             r.to_dictionary(1)
 
+    def test_area(self):
+        """mothod to area of rectangle """
+        r = Rectangle(10, 2, 0, 0, 0)
+        self.assertEqual(20, r.area())
+        r = Rectangle(999999999999999, 999999999999999999, 0, 0, 1)
+        self.assertEqual(999999999999998999000000000000001, r.area())
+        r = Rectangle(2, 10, 1, 1, 1)
+        r.width = 7
+        r.height = 14
+        self.assertEqual(98, r.area())
+        with self.assertRaises(TypeError):
+            r.area(1)
+
 
 if __name__ == '__main__':
     unittest.main()
