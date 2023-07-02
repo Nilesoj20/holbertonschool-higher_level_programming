@@ -31,6 +31,10 @@ class TestBase(unittest.TestCase):
         r2 = Rectangle(4, 2, 4, 1, 12)
         list_dicts = [r1.to_dictionary(), r2.to_dictionary()]
         self.assertTrue(len(Base.to_json_string(list_dicts)) == 106)
+        s1 = Square(10, 2, 3, 4)
+        self.assertTrue(len(Base.to_json_string([s1.to_dictionary()])) == 39)
+        with self.assertRaises(TypeError):
+            Base.to_json_string([], 1)
 
     def test_from_json_string(self):
         """Method to from_json_string """
@@ -52,6 +56,11 @@ class TestBase(unittest.TestCase):
         Rectangle.save_to_file([])
         with open("Rectangle.json", "r") as file:
             self.assertEqual(file.readline(), '[]')
+        r1 = Rectangle(10, 7, 2, 8, 5)
+        r2 = Rectangle(2, 4, 1, 2, 3)
+        Rectangle.save_to_file([r1, r2])
+        with open("Rectangle.json", "r") as file:
+            self.assertTrue(len(file.read()) == 105)
 
     def test_create(self):
         """Method to create"""

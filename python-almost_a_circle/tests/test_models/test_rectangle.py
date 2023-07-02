@@ -35,6 +35,7 @@ class TestRectangle(unittest.TestCase):
         self.assertRaises(TypeError, Rectangle, 4, 5, 2, "1")
         self.assertRaises(ValueError, Rectangle, 4, 5, -2, 1)
         self.assertRaises(ValueError, Rectangle, 4, 5, 2, -1)
+        self.assertEqual(7, Rectangle(10, 2, 0, 0, 7).id)
 
 
 if __name__ == '__main__':
