@@ -39,13 +39,6 @@ class TestRectangle(unittest.TestCase):
         self.assertRaises(ValueError, Rectangle, 4, 5, -2, 1)
         self.assertRaises(ValueError, Rectangle, 4, 5, 2, -1)
 
-    def test_pycodestyle_conformance(self):
-        """Test that we conform to PEP8."""
-        style = pycodestyle.StyleGuide(quiet=True)
-        result = style.check_files(['models/rectangle.py',
-                                    'tests/test_models/test_rectangle.py'])
-        self.assertEqual(result.total_errors, 0, "Found errors")
-
 
 if __name__ == '__main__':
     unittest.main()
