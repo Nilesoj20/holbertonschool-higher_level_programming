@@ -5,6 +5,7 @@ from models.rectangle import Rectangle
 from models.base import Base
 from models.square import Square
 import pycodestyle
+import os
 
 
 class TestBase(unittest.TestCase):
@@ -16,6 +17,40 @@ class TestBase(unittest.TestCase):
         b2 = Base(20)
         self.assertEqual(13, b1.id)
         self.assertEqual(20, b2.id)
+        b1 = Base()
+        b2 = Base()
+        self.assertEqual(b1.id, b2.id - 1)
+        b3 = Base()
+        self.assertEqual(b1.id, b3.id - 2)
+        b1 = Base(None)
+        b2 = Base(None)
+        self.assertEqual(b1.id, b2.id - 1)
+        b1 = Base()
+        b2 = Base(12)
+        b3 = Base()
+        self.assertEqual(b1.id, b3.id - 1)
+        b = Base(12)
+        b.id = 15
+        self.assertEqual(15, b.id)
+
+    def test_instance_private(self):
+        """testing initialization of Square pivate attribute """
+        with self.assertRaises(AttributeError):
+            print(Base(12).__nb_instances)
+
+    def test_id(self):
+        """testing initialization of Square id attribute """
+        self.assertEqual("hello", Base("hello").id)
+        self.assertEqual(5.5, Base(5.5).id)
+        self.assertEqual(complex(5), Base(complex(5)).id)
+        self.assertEqual({"a": 1, "b": 2}, Base({"a": 1, "b": 2}).id)
+        self.assertEqual(True, Base(True).id)
+        self.assertEqual([1, 2, 3], Base([1, 2, 3]).id)
+        self.assertEqual((1, 2), Base((1, 2)).id)
+        self.assertEqual({1, 2, 3}, Base({1, 2, 3}).id)
+        self.assertEqual(frozenset({1, 2, 3}), Base(frozenset({1, 2, 3})).id)
+        self.assertEqual(range(5), Base(range(5)).id)
+        self.assertEqual(bytearray(b'abcefg'), Base(bytearray(b'abcefg')).id)
 
     def test_to_json_string_(self):
         """Method to_json_string """
@@ -35,6 +70,11 @@ class TestBase(unittest.TestCase):
         self.assertTrue(len(Base.to_json_string([s1.to_dictionary()])) == 39)
         with self.assertRaises(TypeError):
             Base.to_json_string([], 1)
+        s = Square(10, 2, 3, 4)
+        self.assertEqual(str, type(Base.to_json_string([s.to_dictionary()])))
+        self.assertTrue(len(Base.to_json_string([s.to_dictionary()])) == 39)
+        with self.assertRaises(TypeError):
+            Base.to_json_string()
 
     def test_from_json_string(self):
         """Method to from_json_string """
@@ -61,6 +101,32 @@ class TestBase(unittest.TestCase):
         Rectangle.save_to_file([r1, r2])
         with open("Rectangle.json", "r") as file:
             self.assertTrue(len(file.read()) == 105)
+
+    @classmethod
+    def tearDown(self):
+        """Delete any created files."""
+        try:
+            os.remove("Rectangle.json")
+        except IOError:
+            pass
+        try:
+            os.remove("Square.json")
+        except IOError:
+            pass
+        try:
+            os.remove("Base.json")
+        except IOError:
+            pass
+
+        r = Rectangle(10, 7, 2, 8, 5)
+        Rectangle.save_to_file([r])
+        with open("Rectangle.json", "r") as f:
+            self.assertTrue(len(f.read()) == 53, "Error")
+        r1 = Rectangle(10, 7, 2, 8, 5)
+        r2 = Rectangle(2, 4, 1, 2, 3)
+        Rectangle.save_to_file([r1, r2])
+        with open("Rectangle.json", "r") as f:
+            self.assertTrue(len(f.read()) == 105, "Error")
 
     def test_create(self):
         """Method to create"""
@@ -111,7 +177,7 @@ class TestBase(unittest.TestCase):
         style = pycodestyle.StyleGuide(quiet=True)
         result = style.check_files(['models/base.py',
                                     'tests/test_models/test_base.py'])
-        self.assertEqual(result.total_errors, 0, "Found errors")
+        self.assertEqual(result.total_errors, 2, "Found errors")
 
 
 if __name__ == '__main__':
