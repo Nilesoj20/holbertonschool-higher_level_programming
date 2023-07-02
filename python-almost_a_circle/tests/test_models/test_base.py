@@ -27,6 +27,10 @@ class TestBase(unittest.TestCase):
         self.assertEqual(str, type(json_dictionary))
         js = json.dumps([{'width': 5, 'height': 8}])
         self.assertEqual(js, Base.to_json_string([{'width': 5, 'height': 8}]))
+        r1 = Rectangle(2, 3, 5, 19, 2)
+        r2 = Rectangle(4, 2, 4, 1, 12)
+        list_dicts = [r1.to_dictionary(), r2.to_dictionary()]
+        self.assertTrue(len(Base.to_json_string(list_dicts)) == 106)
 
     def test_from_json_string(self):
         """Method to from_json_string """
