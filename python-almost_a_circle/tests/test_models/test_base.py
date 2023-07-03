@@ -120,6 +120,15 @@ class TestBase(unittest.TestCase):
         """Method to save_to_file"""
         rec1 = Rectangle(4, 5)
         rec2 = Rectangle(6, 7)
+
+        Rectangle.save_to_file(None)
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual("[]", f.read())
+
+        Rectangle.save_to_file([])
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual("[]", f.read())
+
         Rectangle.save_to_file(None)
         with open("Rectangle.json", "r") as file:
             self.assertEqual(file.readline(), '[]')
