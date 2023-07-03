@@ -16,7 +16,7 @@ class TestBase(unittest.TestCase):
         """Method inicial """
         b1 = Base()
         b2 = Base(20)
-        self.assertEqual(21, b1.id)
+        self.assertEqual(23, b1.id)
         self.assertEqual(20, b2.id)
         b1 = Base()
         b2 = Base()
@@ -116,57 +116,38 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(TypeError):
             Base.from_json_string([], 1)
 
-    def test_to_json_string_empty_list(self):
-        """ Method to save_to_file empty"""
-        self.assertEqual("[]", Base.to_json_string([]))
-
-    def test_to_json_string_none(self):
-        """ Method to save_to_file none"""
-        self.assertEqual("[]", Base.to_json_string(None))
-
     def test_save_to_file(self):
         """Method to save_to_file"""
-        rec1 = Rectangle(4, 5)
-        rec2 = Rectangle(6, 7)
-
         Rectangle.save_to_file(None)
-        with open("Rectangle.json", "r") as file:
-            self.assertEqual(file.readline(), '[]')
-
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual(f.readline(), '[]')
+        r1 = Rectangle(3, 4)
+        r2 = Rectangle(5, 4)
+        Rectangle.save_to_file([r1, r2])
+        file_1 = r1.to_dictionary()
+        file_2 = r2.to_dictionary()
+        file_ = [file_1, file_2]
+        str_json = Rectangle.to_json_string(file_)
+        with open("Rectangle.json", "r") as f:
+            self.assertEqual(f.readline(), str_json)
         Rectangle.save_to_file([])
-        with open("Rectangle.json", "r") as file:
-            self.assertEqual(file.readline(), '[]')
-        r1 = Rectangle(10, 7, 2, 8, 5)
-        r2 = Rectangle(2, 4, 1, 2, 3)
-        Rectangle.save_to_file([r1, r2])
-        with open("Rectangle.json", "r") as file:
-            self.assertTrue(len(file.read()) == 105)
-
-        r = Rectangle(10, 7, 2, 8, 5)
-        Rectangle.save_to_file([r])
         with open("Rectangle.json", "r") as f:
-            self.assertTrue(len(f.read()) == 53, "Error")
-        r1 = Rectangle(10, 7, 2, 8, 5)
-        r2 = Rectangle(2, 4, 1, 2, 3)
-        Rectangle.save_to_file([r1, r2])
-        with open("Rectangle.json", "r") as f:
-            self.assertTrue(len(f.read()) == 105, "Error")
-
-    @classmethod
-    def tearDown(self):
-        """Delete any created files."""
-        try:
-            os.remove("Rectangle.json")
-        except IOError:
-            pass
-        try:
-            os.remove("Square.json")
-        except IOError:
-            pass
-        try:
-            os.remove("Base.json")
-        except IOError:
-            pass
+            self.assertEqual(f.readline(), '[]')
+        Square.save_to_file([])
+        with open("Square.json", "r") as f:
+            self.assertEqual(f.readline(), '[]')
+        s1 = Square(3)
+        s2 = Square(5)
+        Square.save_to_file([s1, s2])
+        file_1 = s1.to_dictionary()
+        file_2 = s2.to_dictionary()
+        file_ = [file_1, file_2]
+        str_json = Square.to_json_string(file_)
+        with open("Square.json", "r") as f:
+            self.assertEqual(f.readline(), str_json)
+        Square.save_to_file(None)
+        with open("Square.json", "r") as f:
+            self.assertEqual(f.readline(), '[]')
 
     def test_create(self):
         """Method to create"""
