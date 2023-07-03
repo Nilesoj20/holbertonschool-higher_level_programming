@@ -36,6 +36,15 @@ class TestSquare(unittest.TestCase):
         self.assertEqual(8, s.size)
         self.assertEqual(0, Square(10).x)
         self.assertEqual(0, Square(10).y)
+        with self.assertRaises(TypeError):
+            Square("1")
+        with self.assertRaises(TypeError):
+            Square(0)
+
+    def test_size(self):
+        """ testing initialization of Square size attribute"""
+        with self.assertRaisesRegex(TypeError, "width must be an integer"):
+            Square(None)
 
     def test_of_x(self):
         """ testing initialization of Square x attribute"""
