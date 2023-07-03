@@ -1,5 +1,9 @@
 """Testing of all rectangle files, classes and methods"""
 import unittest
+from unittest import mock
+import io
+import sys
+from unittest.mock import patch
 from models.rectangle import Rectangle
 from models.base import Base
 from models.square import Square
@@ -15,7 +19,7 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(4, r1.height)
         self.assertEqual(0, r1.x)
         self.assertEqual(0, r1.y)
-        self.assertEqual(30, r1.id)
+        self.assertEqual(33, r1.id)
         self.assertRaises(TypeError, Rectangle, "3", 4)
         self.assertRaises(TypeError, Rectangle, 3, "4")
         self.assertRaises(ValueError, Rectangle, -1, 3)
@@ -31,7 +35,7 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(5, r2.height)
         self.assertEqual(2, r2.x)
         self.assertEqual(1, r2.y)
-        self.assertEqual(41, r2.id)
+        self.assertEqual(44, r2.id)
         self.assertRaises(TypeError, Rectangle, 4, 5, "2", 1)
         self.assertRaises(TypeError, Rectangle, 4, 5, 2, "1")
         self.assertRaises(ValueError, Rectangle, 4, 5, -2, 1)
@@ -153,6 +157,21 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(98, r.area())
         with self.assertRaises(TypeError):
             r.area(1)
+
+    def test_display(self):
+        """Test for this method"""
+        r1 = Rectangle(1, 2)
+        with mock.patch("sys.stdout", new=io.StringIO()) as f:
+            r1.display()
+        assert f.getvalue() == "#\n#\n"
+        r2 = Rectangle(1, 2, 1)
+        with mock.patch("sys.stdout", new=io.StringIO()) as f:
+            r2.display()
+        assert f.getvalue() == " #\n #\n"
+        r3 = Rectangle(1, 2, 1, 1)
+        with mock.patch("sys.stdout", new=io.StringIO()) as f:
+            r3.display()
+        assert f.getvalue() == "\n #\n #\n"
 
 
 if __name__ == '__main__':

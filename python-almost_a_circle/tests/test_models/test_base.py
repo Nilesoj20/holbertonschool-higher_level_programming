@@ -1,4 +1,5 @@
 """Testing of all base files, classes and methods"""
+import io
 import unittest
 import json
 from models.rectangle import Rectangle
@@ -40,7 +41,7 @@ class TestBase(unittest.TestCase):
 
     def test_id(self):
         """testing initialization of Square id attribute """
-        self.assertEqual("hello", Base("hello").id)
+        self.assertEqual("Joselin", Base("Joselin").id)
         self.assertEqual(5.5, Base(5.5).id)
         self.assertEqual(complex(5), Base(complex(5)).id)
         self.assertEqual({"a": 1, "b": 2}, Base({"a": 1, "b": 2}).id)
