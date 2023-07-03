@@ -62,6 +62,10 @@ class TestSquare(unittest.TestCase):
             Square(1, (1, 2, 3))
         with self.assertRaisesRegex(ValueError, "x must be >= 0"):
             Square(5, -1, 0)
+        with self.assertRaisesRegex(TypeError, "x must be an integer"):
+            Square(1, None)
+        with self.assertRaisesRegex(ValueError, "width must be > 0"):
+            Square(-1, 2)
 
     def test_of_y(self):
         """testing initialization of Square y attribute"""
