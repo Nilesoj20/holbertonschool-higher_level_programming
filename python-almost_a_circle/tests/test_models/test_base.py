@@ -1,12 +1,10 @@
 """Testing of all base files, classes and methods"""
-import io
 import unittest
 import json
 from models.rectangle import Rectangle
 from models.base import Base
 from models.square import Square
 import pycodestyle
-import os
 
 
 class TestBase(unittest.TestCase):
@@ -212,18 +210,6 @@ class TestBase(unittest.TestCase):
         self.assertAlmostEqual(soutput[1].height, 7)
         self.assertAlmostEqual(soutput[1].x, 9)
         self.assertAlmostEqual(soutput[1].y, 1)
-
-    @classmethod
-    def tearDown(self):
-        """Delete any created files."""
-        try:
-            os.remove("Rectangle.json")
-        except IOError:
-            pass
-        try:
-            os.remove("Square.json")
-        except IOError:
-            pass
 
     def test_pycodestyle_conformance(self):
         """Test that we conform to PEP8."""
