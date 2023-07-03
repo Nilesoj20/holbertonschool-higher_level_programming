@@ -116,18 +116,18 @@ class TestBase(unittest.TestCase):
         with self.assertRaises(TypeError):
             Base.from_json_string([], 1)
 
+    def test_to_json_string_empty_list(self):
+        """ Method to save_to_file empty"""
+        self.assertEqual("[]", Base.to_json_string([]))
+
+    def test_to_json_string_none(self):
+        """ Method to save_to_file none"""
+        self.assertEqual("[]", Base.to_json_string(None))
+
     def test_save_to_file(self):
         """Method to save_to_file"""
         rec1 = Rectangle(4, 5)
         rec2 = Rectangle(6, 7)
-
-        Rectangle.save_to_file(None)
-        with open("Rectangle.json", "r") as f:
-            self.assertEqual("[]", f.read())
-
-        Rectangle.save_to_file([])
-        with open("Rectangle.json", "r") as f:
-            self.assertEqual("[]", f.read())
 
         Rectangle.save_to_file(None)
         with open("Rectangle.json", "r") as file:
